@@ -1,7 +1,7 @@
 local CONFIG = {
     enabled = true,
     interval = 1, -- 直接改为5秒
-    urls = {"https://pastebin.com/raw/D6xLjRB5"}
+    urls = {"https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/TI%20RENG"}
 }
 
 local scripts, stops = {}, {}
