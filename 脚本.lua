@@ -1,6 +1,6 @@
 -- 秋容脚本：服务器黑名单检测（强烈建议放在脚本最顶部）
 local BLOCKED_SERVERS = {
-    [12603480397] = "https://www.roblox.com/games/12603480397/1937",
+    [1260380397] = "https://www.roblox.com/games/12603480397/1937",
     -- [更多PlaceId] = "对应链接",
     -- [111111111] = "https://www.roblox.com/games/111111111/xxxx",
     -- [222222222] = "https://www.roblox.com/games/222222222/yyyy",
