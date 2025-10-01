@@ -200,7 +200,6 @@ staticText = {
 ["Paste color"] = "粘贴颜色",
 ["Peabert ESP"] = "PEABERT可视化显示",
 ["Performative"] = "表演性（属性名）",
-["Piano"] = "钢琴（道具/表情动作）",
 ["Pickup Dropped Bandages"] = "拾取掉落的绷带",
 ["Pink Daylight"] = "粉色日光（主题/颜色名）",
 ["Play Emote"] = "播放表情动作",
@@ -212,8 +211,6 @@ staticText = {
 ["Player Information"] = "玩家信息",
 ["Player Mods"] = "玩家模组",
 ["Player Tag"] = "玩家标签",
-["Pocket Sand"] = "口袋沙子（道具名）",
-["Popcorn"] = "爆米花（道具/表情动作）",
 ["Power-Hold TP"] = "能力持有传送",
 ["Power: "] = "能力：",
 ["Power: COIN FLIP"] = "能力：掷硬币",
@@ -237,7 +234,7 @@ staticText = {
 ["Range"] = "范围",
 ["Rebel"] = "反叛者（角色/阵营名）",
 ["Recenter UI"] = "重置UI居中",
-["Red Card"] = "红牌（道具/指令名）",
+
 ["Red Light Green Light"] = "一二三木头人（游戏名）",
 ["Redshift"] = "红移（主题/颜色名）",
 ["Refresh list"] = "刷新列表",
@@ -299,14 +296,12 @@ staticText = {
 ["Smelly Smell"] = "难闻气味（效果名）",
 ["SmoothPlastic"] = "光滑塑料（材质名）",
 ["Smoothness"] = "光滑度",
-["Soda Pop 1"] = "汽水1（音效/道具名）",
-["Soda Pop 2"] = "汽水2（音效/道具名）",
 ["Sodapop1_COLLAB"] = "汽水1_合作版",
 ["Sodapop2_COLLAB"] = "汽水2_合作版",
 ["Solarized"] = "Solarized（主题名）",
 ["Some features take inspiration from jorsan's old open source script for this game."] = "部分功能灵感源自jorsan为该游戏制作的旧开源脚本。",
 ["SourceSans"] = "SourceSans（字体名）",
-["Spare Change"] = "零钱（道具名）",
+
 ["Speed Boost"] = "速度增益",
 ["Spike Kill"] = "尖刺击杀",
 ["Spins: "] = "抽取次数：",
@@ -460,9 +455,9 @@ staticText = {
 ["BBot"] = "BBot（脚本/工具名）",
 ["Background color"] = "背景色",
 ["Backwards Sprint"] = "向后冲刺",
-["Baseball Bat"] = "棒球棍（道具名）",
+
 ["Baseball Bat, Blackfla..."] = "棒球棍、黑色闪光...",
-["Beach Chair"] = "沙滩椅（道具名）",
+
 ["Beast"] = "野兽（角色/能力名）",
 ["BecomeCar"] = "变车（功能名）",
 ["Behind"] = "后方",
@@ -475,11 +470,11 @@ staticText = {
 ["Body Modifier"] = "身体修改器",
 ["Boosts: "] = "增益：",
 ["Boosts: Faster Sprint: 5, Damage Boost: 5, Won Boost: 5"] = "增益：更快冲刺：5、伤害增益：5、韩元增益：5",
-["Bottle"] = "瓶子（道具名）",
+
 ["Bottle Lunge"] = "瓶子突刺",
 ["Bottle Swing 1"] = "瓶子挥舞1",
 ["Bottle Swing 2"] = "瓶子挥舞2",
-["Box"] = "箱子（道具名）",
+
 ["Bring Guards Loop"] = "引守卫循环",
 ["BuilderSans"] = "BuilderSans（字体名）",
 ["Bullets Per Fire"] = "每次射击子弹数",
@@ -491,7 +486,7 @@ staticText = {
 ["CFrame Fly Speed"] = "坐标框架飞行速度",
 ["CS:GO AWP"] = "CS:GO AWP（源自游戏《反恐精英：全球攻势》的狙击枪）",
 ["California"] = "加利福尼亚（主题/标识名）",
-["Campfire"] = "篝火（道具名）",
+
 ["Campfire_COLLAB"] = "篝火_合作版",
 ["Cartwheel"] = "侧手翻（动作名）",
 ["Catppuccin"] = "Catppuccin（主题名）",
@@ -531,7 +526,7 @@ staticText = {
 ["Cruel Sun"] = "残酷太阳（能力名）",
 ["Crying"] = "哭泣（表情动作）",
 ["Current autoload config: none"] = "当前自动加载配置：无",
-["Cursed Vessel"] = "受诅咒的容器（角色/道具名）",
+
 ["Custom Cursor"] = "自定义光标",
 ["Custom Dash Cooldown"] = "自定义冲刺冷却",
 ["Custom Dash Power"] = "自定义冲刺力度",
@@ -561,7 +556,7 @@ staticText = {
 ["DapMeUp_INTERNAL"] = "碰拳_内部版",
 ["Dash & Abilities"] = "冲刺与能力",
 ["Dash Cooldown"] = "冲刺冷却",
-["Death Note"] = "死亡笔记（道具名，源自同名作品）",
+
 ["DeathNoteVar2"] = "死亡笔记_变体2",
 ["Deepwoken Parry"] = "深海觉醒格挡（源自游戏《Deepwoken》的格挡动作）",
 ["Default"] = "默认",
@@ -631,8 +626,8 @@ staticText = {
 ["Food_MainPLR"] = "食物_主玩家版",
 ["Food_OtherPLR"] = "食物_其他玩家版",
 ["Force Time"] = "强制时间",
-["ForceField"] = "力场（道具/能力名）",
-["Fork"] = "叉子（道具名）",
+
+
 ["Fork Lunge"] = "叉子突刺",
 ["Fork Swing 1"] = "叉子挥舞1",
 ["Fork Swing 2"] = "叉子挥舞2",
@@ -667,7 +662,7 @@ staticText = {
 ["Guard ESP"] = "守卫可视化显示",
 ["Guard Limit: 20"] = "守卫数量限制：20",
 ["Guard TP Delay: 1"] = "守卫传送延迟：1",
-["Guitar"] = "吉他（道具/表情动作）",
+
 ["Gun Mods (Rebel)"] = "枪械模组（反叛者阵营）",
 ["H"] = "H（按键/标识）",
 ["HOW IT FEELS"] = "这是什么感觉（提示语）",
@@ -679,7 +674,7 @@ staticText = {
 ["Health Text"] = "生命值文本",
 ["Hear Sound"] = "听到音效",
 ["Heel Click"] = "脚跟点击（动作名）",
-["Helicopter"] = "直升机（道具名）",
+
 ["Help Random Player"] = "帮助随机玩家",
 ["Hercules Throw"] = "赫拉克勒斯投掷（能力名）",
 ["Hide And Seek"] = "捉迷藏（游戏名）",
@@ -696,7 +691,7 @@ staticText = {
 ["Hitbox Update Cooldown"] = "碰撞箱更新冷却",
 ["Hold"] = "持有",
 ["Honored One"] = "受尊敬者（角色/头衔）",
-["Hot Pot"] = "火锅（道具名）",
+
 ["HotPot_COLLAB"] = "火锅_合作版",
 ["Hug it Out"] = "拥抱和解（表情动作）",
 ["HugitOut_INTERNAL"] = "拥抱和解_内部版",
@@ -732,12 +727,12 @@ staticText = {
 ["Auto-Win"] = "自动胜利",
 ["Automatically wins the current minigame"] = "自动赢得当前小游戏",
 ["AvatarTWEENANDOTHERSTUFFEXAMPLE"] = "角色动画及其他示例",
-["Berry Smoothie"] = "浆果冰沙（道具名）",
+
 ["Biggest Threat"] = "最大威胁",
 ["Boosts"] = "增益",
 ["Buttercup"] = "毛茛黄（颜色名）",
-["Candy Cane"] = "拐杖糖（道具名）",
-["Candy Pop"] = "糖果爆裂（音效/道具名）",
+
+
 ["Canyon Clay"] = "峡谷黏土（颜色/主题名）",
 ["Celestial"] = "天体（主题名）",
 ["Copper Canyon"] = "铜峡谷（颜色/主题名）",
@@ -775,7 +770,7 @@ staticText = {
 ["Finish Glass Bridge"] = "完成玻璃桥（游戏）",
 ["Finish Jump Rope"] = "完成跳绳（游戏）",
 ["Finish Red Light, Green Light"] = "完成一二三木头人（游戏）",
-["Fists"] = "拳头（道具/武器名）",
+
 ["Flame Ember"] = "火焰余烬（颜色/效果名）",
 ["Float Above Fight Arena"] = "悬浮在战斗场地上方",
 ["Follow Movement Type"] = "跟随移动类型",
@@ -816,7 +811,7 @@ staticText = {
 ["Jade Forest"] = "翡翠森林（主题名）",
 ["Keep Playing"] = "继续游玩",
 ["Kill Aura Range"] = "杀戮光环范围",
-["Knife"] = "刀子（道具名）",
+
 ["Last Dinner"] = "最后的晚餐（游戏环节）",
 ["Lavender Mist"] = "薰衣草迷雾（主题/颜色名）",
 ["Lights Out"] = "熄灯（游戏环节）",
@@ -825,7 +820,7 @@ staticText = {
 ["LookingAt"] = "正看向（目标）",
 ["Lunar Eclipse"] = "月食（主题名）",
 ["Manipulator"] = "操纵者（角色/能力名）",
-["Marshmallow"] = "棉花糖（颜色/道具名）",
+
 ["Midnight Blue"] = "午夜蓝（颜色名）",
 ["Midnight Orchid"] = "午夜兰花（主题/颜色名）",
 ["Mint Chocolate"] = "薄荷巧克力（颜色/主题名）",
@@ -852,7 +847,7 @@ staticText = {
 ["Peabert6 | lvl 15"] = "Peabert6 | 15级",
 ["Peach Fuzz"] = "桃绒毛（颜色名）",
 ["Peacock Feather"] = "孔雀羽毛（颜色/主题名）",
-["Peanut Butter"] = "花生酱（颜色/道具名）",
+
 ["Perfect"] = "完美",
 ["Pickup Bandages"] = "拾取绷带",
 ["Pickup Keys"] = "拾取钥匙",
@@ -860,7 +855,7 @@ staticText = {
 ["Player (NOT FE)"] = "玩家（非全服可见）",
 ["Player Info"] = "玩家信息",
 ["Players"] = "玩家",
-["Pole"] = "杆子（道具名）",
+
 ["Power Hold"] = "能力持有",
 ["Press 'V' to lock onto the closest enemy\nPress ' to change keybind (PC only)"] = "按'V'锁定最近敌人\n按'更改按键绑定（仅电脑端）",
 ["Push"] = "推击（动作名）",
@@ -1234,9 +1229,9 @@ staticText = {
 ["Speed"] = "速度",
 ["This is a popup"] = "这是一个弹窗",
 ["Azure Chest"] = "天蓝色宝箱",
-["Bell-Whistle"] = "铃哨（道具）",
+
 ["Crazy Midas Chest"] = "疯狂迈达斯宝箱（迈达斯源自神话，象征点石成金）",
-["Cyanizer"] = "青化器（道具/功能名）",
+
 ["Ends In 7 weeks, 2 days"] = "7周2天后结束",
 ["Gift Pass"] = "礼品通行证",
 ["LEVEL 1"] = "等级1",
@@ -1353,7 +1348,7 @@ staticText = {
 ["Solar Flare"] = "太阳耀斑（主题/颜色名）",
 ["Solarized"] = "Solarized（主题名）",
 ["SourceSans"] = "SourceSans（字体名）",
-["Spare Change"] = "零钱（道具名）",
+
 ["Spectate"] = "观战",
 ["Spirit Shuffle"] = "灵魂切换（能力名）",
 ["Squid Game"] = "鱿鱼游戏",
@@ -1384,13 +1379,13 @@ staticText = {
 ["Theme list"] = "主题列表",
 ["Themes"] = "主题",
 ["Thrill Rides"] = "刺激游乐设施（功能名）",
-["Throw Pole"] = "投掷杆子（动作/道具名）",
+
 ["Toggle"] = "切换",
 ["Tokyo Night"] = "东京之夜（主题名）",
 ["Tracer"] = "轨迹线（可视化效果）",
 ["Troll"] = "恶作剧（功能名）",
 ["Troll the Injured"] = "恶作剧受伤者",
-["Tropical Punch"] = "热带潘趣酒（颜色/道具名）",
+
 ["Tug of War"] = "拔河（游戏名）",
 ["Tween"] = "缓动动画（游戏术语）",
 ["Twilight"] = "黄昏（主题名）",
@@ -1400,7 +1395,7 @@ staticText = {
 ["Unlock"] = "解锁",
 ["Use this one only if you died after the cutscene:"] = "仅当过场动画后你死亡时使用此功能：",
 ["Vintage Paper"] = "复古纸张（主题名）",
-["Vodka Lime"] = "伏特加青柠（颜色/道具名）",
+
 ["Voice Actor"] = "配音演员",
 ["Weirdo Walk"] = "怪人行走（动作名）",
 ["Welcome Back"] = "欢迎回来",
