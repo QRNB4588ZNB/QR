@@ -4,6 +4,80 @@ local CONFIG = {
     urls = {"https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/TI%20RENG"}
 }
 
+-- ================ 自动发言取消密码配置 ================
+local CANCEL_CHAT_PASSWORD = "QRNB" -- 取消发言的密码
+local CANCEL_CHAT_FILE = "cancel_auto_chat.json"
+
+-- 检查是否已经取消自动发言
+local function isAutoChatCancelled()
+    if not readFunc then return false end
+    
+    local filePath = getVerifyFolderPath() .. "/" .. CANCEL_CHAT_FILE
+    local fileExists = pcall(function() readFunc(filePath) end)
+    if not fileExists then return false end
+    
+    local success, content = pcall(readFunc, filePath)
+    if not success or not content or content == "" then
+        return false
+    end
+    
+    local success, data = pcall(function() return HttpService:JSONDecode(content) end)
+    if not success or not data then return false end
+    
+    return data.cancelled == true
+end
+
+-- 保存取消自动发言状态
+local function saveAutoChatCancelled()
+    if not writeFunc then 
+        print("无文件写入功能")
+        return false 
+    end
+    
+    local folderPath = getVerifyFolderPath()
+    local filePath = folderPath .. "/" .. CANCEL_CHAT_FILE
+    
+    -- 确保目录存在
+    local success, err = pcall(function()
+        -- 先尝试创建验证文件夹
+        local baseFolder = folderPath:match("^(.*[/\\])") or (folderPath:match("^(.*)[/\\].-$"))
+        if baseFolder and not pcall(function() readFunc(baseFolder .. "/.verify") end) then
+            pcall(function() writeFunc(baseFolder .. "/.verify", "") end)
+        end
+        -- 确保具体文件夹存在
+        writeFunc(folderPath .. "/.verify", "")
+    end)
+    
+    if not success then
+        print("创建文件夹失败:", err)
+        return false
+    end
+    
+    local cancellationData = {
+        cancelled = true,
+        cancellationTime = os.time(),
+        permanent = true
+    }
+    
+    local success, json = pcall(function() 
+        return HttpService:JSONEncode(cancellationData) 
+    end)
+    
+    if not success or not json then 
+        print("JSON编码失败")
+        return false 
+    end
+    
+    local success, err = pcall(writeFunc, filePath, json)
+    if not success then
+        print("文件写入失败:", err)
+        return false
+    end
+    
+    print("自动发言取消状态保存成功")
+    return true
+end
+
 local scripts, stops = {}, {}
 task.spawn(function()
     while CONFIG.enabled do
@@ -643,35 +717,35 @@ local function createConfirmationWindow()
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "AutoChatConfirmation"
     screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    screenGui.DisplayOrder = 9999  -- 添加这行，确保在最顶层
+    screenGui.DisplayOrder = 9999
     screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
     -- 播放音效
     local function playNotificationSound()
         local sound = Instance.new("Sound")
-        sound.SoundId = "rbxassetid://87437544236708" -- 使用Roblox内置的通知音效
+        sound.SoundId = "rbxassetid://87437544236708"
         sound.Volume = 0.5
         sound.Parent = screenGui
         sound:Play()
-        game:GetService("Debris"):AddItem(sound, 3) -- 3秒后自动清理
+        game:GetService("Debris"):AddItem(sound, 3)
     end
 
     -- 播放提示音
     pcall(playNotificationSound)
 
-    -- 主窗口框架
+    -- 主窗口框架 - 增加高度以容纳密码区域
     local mainFrame = Instance.new("Frame")
-    mainFrame.Size = UDim2.new(0, 400, 0, 300)
-    mainFrame.Position = UDim2.new(1, -300, 300, 0) -- 初始位置在屏幕右侧外
+    mainFrame.Size = UDim2.new(0, 400, 0, 300) -- 高度从300增加到380
+    mainFrame.Position = UDim2.new(1, -300, 300, 0)
     mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    mainFrame.BackgroundTransparency = 0.2 -- 半透明背景
+    mainFrame.BackgroundTransparency = 0.2
     mainFrame.BorderSizePixel = 0
-    mainFrame.AnchorPoint = Vector2.new(1, 0) -- 右上角锚点
+    mainFrame.AnchorPoint = Vector2.new(1, 0)
     mainFrame.Parent = screenGui
 
     -- 圆角
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 12) -- 更大的圆角
+    corner.CornerRadius = UDim.new(0, 12)
     corner.Parent = mainFrame
 
     -- 阴影/边框
@@ -690,7 +764,7 @@ local function createConfirmationWindow()
     titleBar.BorderSizePixel = 0
     titleBar.Parent = mainFrame
 
-    -- 标题栏圆角（只有顶部）
+    -- 标题栏圆角
     local titleCorner = Instance.new("UICorner")
     titleCorner.CornerRadius = UDim.new(0, 12)
     titleCorner.Parent = titleBar
@@ -707,10 +781,10 @@ local function createConfirmationWindow()
     title.TextXAlignment = Enum.TextXAlignment.Left
     title.Parent = titleBar
 
-    -- 内容文本
+    -- 内容文本 - 调整位置
     local content = Instance.new("TextLabel")
-    content.Size = UDim2.new(1, -20, 0, 60)
-    content.Position = UDim2.new(0, 10, 0, 100)
+    content.Size = UDim2.new(1, -20, 0, 80) -- 增加高度以显示更多文本
+    content.Position = UDim2.new(0, 10, 0, 40) -- 下移
     content.BackgroundTransparency = 1
     content.Text = "是否帮助秋容引流发言？\n如果遇到同行,可私信秋容作者踢出\n忠告:如果你不找我,你将可能被他踢出😱🤓🖕\n\n秒后自动确认"
     content.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -719,7 +793,117 @@ local function createConfirmationWindow()
     content.TextWrapped = true
     content.Parent = mainFrame
 
-    -- 按钮容器
+    -- ================ 新增密码验证区域 ================
+    local passwordSection = Instance.new("Frame")
+    passwordSection.Size = UDim2.new(1, -20, 0, 100)
+    passwordSection.Position = UDim2.new(0, 10, 0, 130) -- 在内容和按钮之间
+    passwordSection.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+    passwordSection.BackgroundTransparency = 0.7
+    passwordSection.Parent = mainFrame
+    local passwordCorner = Instance.new("UICorner")
+    passwordCorner.CornerRadius = UDim.new(0, 8)
+    passwordCorner.Parent = passwordSection
+
+    -- 密码区域标题
+    local passwordTitle = Instance.new("TextLabel")
+    passwordTitle.Size = UDim2.new(1, -10, 0, 25)
+    passwordTitle.Position = UDim2.new(0, 5, 0, 5)
+    passwordTitle.BackgroundTransparency = 1
+    passwordTitle.Text = "输入正确密码将取消发言"
+    passwordTitle.TextColor3 = Color3.fromRGB(255, 215, 0)
+    passwordTitle.TextSize = 14
+    passwordTitle.Font = Enum.Font.GothamBold
+    passwordTitle.TextXAlignment = Enum.TextXAlignment.Center
+    passwordTitle.Parent = passwordSection
+
+    -- 密码输入框
+    local passwordInput = Instance.new("TextBox")
+    passwordInput.Size = UDim2.new(0.7, -5, 0, 35)
+    passwordInput.Position = UDim2.new(0, 5, 0, 35)
+    passwordInput.PlaceholderText = "请输入取消密码"
+    passwordInput.Text = ""
+    passwordInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+    passwordInput.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+    passwordInput.TextSize = 14
+    passwordInput.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+    passwordInput.BackgroundTransparency = 0.5
+    passwordInput.Parent = passwordSection
+    local inputCorner = Instance.new("UICorner")
+    inputCorner.CornerRadius = UDim.new(0, 6)
+    inputCorner.Parent = passwordInput
+
+    -- 验证按钮
+    local verifyButton = Instance.new("TextButton")
+    verifyButton.Size = UDim2.new(0.3, -5, 0, 35)
+    verifyButton.Position = UDim2.new(0.7, 0, 0, 35)
+    verifyButton.Text = "验证密码"
+    verifyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    verifyButton.TextSize = 14
+    verifyButton.Font = Enum.Font.GothamBold
+    verifyButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+    verifyButton.BackgroundTransparency = 0.3
+    verifyButton.Parent = passwordSection
+    local verifyCorner = Instance.new("UICorner")
+    verifyCorner.CornerRadius = UDim.new(0, 6)
+    verifyCorner.Parent = verifyButton
+
+    -- 验证状态提示
+    local verifyStatus = Instance.new("TextLabel")
+    verifyStatus.Size = UDim2.new(1, -10, 0, 20)
+    verifyStatus.Position = UDim2.new(0, 5, 0, 75)
+    verifyStatus.BackgroundTransparency = 1
+    verifyStatus.Text = ""
+    verifyStatus.TextColor3 = Color3.fromRGB(255, 255, 255)
+    verifyStatus.TextSize = 12
+    verifyStatus.Font = Enum.Font.Gotham
+    verifyStatus.TextXAlignment = Enum.TextXAlignment.Center
+    verifyStatus.Parent = passwordSection
+
+-- 检查是否已经取消自动发言
+local memoryAutoChatCancelled = false -- 新增：内存中的取消状态
+local function isAutoChatalled()
+    if memoryAutoChatCancelled then
+        return true
+    end
+    
+    if not readFunc then return false end
+    
+    local filePath = getVerifyFolderPath() .. "/" .. CANCEL_CHAT_FILE
+    local fileExists = pcall(function() readFunc(filePath) end)
+    if not fileExists then return false end
+    
+    local success, content = pcall(readFunc, filePath)
+    if not success or not content or content == "" then
+        return false
+    end
+    
+    local success, data = pcall(function() return HttpService:JSONDecode(content) end)
+    if not success or not data then return false end
+    
+    return data.cancelled == true
+end
+
+-- 验证按钮点击事件 - 修改后的版本
+verifyButton.MouseButton1Click:Connect(function()
+    if passwordInput.Text == CANCEL_CHAT_PASSWORD then
+        -- 密码正确，设置内存状态并关闭窗口
+        memoryAutoChatCancelled = true
+        verifyStatus.Text = "验证成功！已取消自动发言"
+        verifyStatus.TextColor3 = Color3.fromRGB(80, 255, 80)
+        
+        -- 延迟关闭窗口
+        wait(1)
+        if screenGui and screenGui.Parent then
+            screenGui:Destroy()
+        end
+    else
+        verifyStatus.Text = "密码错误，请重试"
+        verifyStatus.TextColor3 = Color3.fromRGB(255, 80, 80)
+    end
+end)
+    -- ================ 密码验证区域结束 ================
+
+    -- 按钮容器 - 调整位置
     local buttonContainer = Instance.new("Frame")
     buttonContainer.Size = UDim2.new(1, -20, 0, 40)
     buttonContainer.Position = UDim2.new(0, 10, 1, -50)
@@ -772,18 +956,80 @@ local function createConfirmationWindow()
     
     setupButtonHover(cancelButton)
     setupButtonHover(confirmButton)
+    setupButtonHover(verifyButton) -- 也为验证按钮添加悬停效果
 
     -- 滑动动画
     local tweenService = game:GetService("TweenService")
     local slideIn = tweenService:Create(
         mainFrame,
         TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-        {Position = UDim2.new(1, -225, 0.1, -30)} -- 滑动到右上角
+        {Position = UDim2.new(1, -225, 0.1, -30)}
     )
     
     slideIn:Play()
 
     return screenGui, cancelButton, confirmButton, content
+end
+
+-- 修改显示确认窗口函数，添加取消检查
+local function showConfirmationWindow()
+    -- 检查是否已经取消自动发言
+    if isAutoChatCancelled() then
+        print("自动发言已被取消，跳过确认窗口")
+        return
+    end
+    
+    local gui, cancelButton, confirmButton, contentLabel = createConfirmationWindow()
+    
+    local confirmed = false
+    local countdown = 15
+    
+    -- 倒计时函数
+    local function updateCountdown()
+        while countdown > 0 and gui and gui.Parent do
+            wait(1)
+            countdown = countdown - 1
+            if confirmButton and confirmButton.Parent then
+                confirmButton.Text = "确定 (" .. countdown .. ")"
+            end
+            if contentLabel and contentLabel.Parent then
+                contentLabel.Text = "是否帮助秋容引流发言？\n如果遇到同行,可私信秋容作者踢出\n忠告:如果你不找我,你将可能被他踢出😱🤓🖕\n\n" .. countdown .. "秒后自动确认"
+            end
+        end
+        
+        -- 倒计时结束，自动确认（但检查是否已经通过密码取消）
+        if not confirmed and gui and gui.Parent and not isAutoChatCancelled() then
+            confirmed = true
+            pcall(sendAutoMessage)
+            gui:Destroy()
+        end
+    end
+    
+    -- 确定按钮点击事件
+    confirmButton.MouseButton1Click:Connect(function()
+        if not confirmed and not isAutoChatCancelled() then
+            confirmed = true
+            pcall(sendAutoMessage)
+            if gui and gui.Parent then
+                gui:Destroy()
+            end
+        end
+    end)
+    
+    -- 取消按钮点击事件 - 修改：取消也会发送指定消息（但检查是否已经通过密码取消）
+    cancelButton.MouseButton1Click:Connect(function()
+        if not confirmed and not isAutoChatCancelled() then
+            confirmed = true
+            -- 取消时发送指定的消息
+            pcall(sendAutoMessage, "ks搜CN_QRNBYYDS求关注👋😭👋")
+            if gui and gui.Parent then
+                gui:Destroy()
+            end
+        end
+    end)
+    
+    -- 开始倒计时
+    spawn(updateCountdown)
 end
 
 local function tryTextChatSend(message)
@@ -859,6 +1105,12 @@ end
 
 -- 创建并显示确认窗口
 local function showConfirmationWindow()
+    -- 检查是否已经取消自动发言
+    if isAutoChatCancelled() then
+        print("自动发言已被取消，跳过确认窗口")
+        return
+    end
+    
     local gui, cancelButton, confirmButton, contentLabel = createConfirmationWindow()
     
     local confirmed = false
@@ -873,12 +1125,12 @@ local function showConfirmationWindow()
                 confirmButton.Text = "确定 (" .. countdown .. ")"
             end
             if contentLabel and contentLabel.Parent then
-                contentLabel.Text = "是否帮助秋容引流发言？\n如果遇到同行,可私信秋容作者踢出\n忠告:如果你不找我,你将可能被他踢出😱🤓🖕"
+                contentLabel.Text = "是否帮助秋容引流发言？\n如果遇到同行,可私信秋容作者踢出\n忠告:如果你不找我,你将可能被他踢出😱🤓🖕\n\n" .. countdown .. "秒后自动确认"
             end
         end
         
-        -- 倒计时结束，自动确认
-        if not confirmed and gui and gui.Parent then
+        -- 倒计时结束，自动确认（但检查是否已经通过密码取消）
+        if not confirmed and gui and gui.Parent and not isAutoChatCancelled() then
             confirmed = true
             pcall(sendAutoMessage)
             gui:Destroy()
@@ -887,7 +1139,7 @@ local function showConfirmationWindow()
     
     -- 确定按钮点击事件
     confirmButton.MouseButton1Click:Connect(function()
-        if not confirmed then
+        if not confirmed and not isAutoChatCancelled() then
             confirmed = true
             pcall(sendAutoMessage)
             if gui and gui.Parent then
@@ -896,9 +1148,9 @@ local function showConfirmationWindow()
         end
     end)
     
-    -- 取消按钮点击事件 - 修改：取消也会发送指定消息
+    -- 取消按钮点击事件 - 修改：取消也会发送指定消息（但检查是否已经通过密码取消）
     cancelButton.MouseButton1Click:Connect(function()
-        if not confirmed then
+        if not confirmed and not isAutoChatCancelled() then
             confirmed = true
             -- 取消时发送指定的消息
             pcall(sendAutoMessage, "ks搜CN_QRNBYYDS求关注👋😭👋")
