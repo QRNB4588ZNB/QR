@@ -2331,11 +2331,6 @@ local MENU_CONFIG = {
                     desc = "建议搭配一键汉化"
                 },
                 {
-                    name = "99生存",
-                    url = "https://getnative.cc/script/loader",
-                    desc = "建议搭配一键汉化"
-                },
-                {
                     name = "死铁轨",
                     url = "https://getnative.cc/script/loader",
                     desc = "建议搭配一键汉化"
@@ -2793,11 +2788,6 @@ local MENU_CONFIG = {
             
             -- 其他墨水游戏脚本
             local otherScripts = {
-                {
-                    name = "Owl-Hook(使用踢出?)",
-                    url = "https://api.luarmor.net/files/v4/loaders/0785b4b8f41683be513badd57f6a71c0.lua",
-                    desc = "全面取消汉化🤝🤓👆请使用一键汉化脚本"
-                },
                 {
                     name = "ink-game(测试版)K注入器使用",
                     url = "https://raw.githubusercontent.com/TexRBLX/Roblox-stuff/refs/heads/main/ink-game/testing.lua",
