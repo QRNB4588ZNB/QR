@@ -1494,7 +1494,6 @@ staticText = {
 ["Dead Man's Rod"] = "死者鱼竿",
 ["Debug"] = "调试",
 ["Deep Coral"] = "深海珊瑚",
-["Demon-Slayer"] = " demon-slaying Rod"] = "除魔鱼竿",
 ["Depthseeker Rod"] = "寻深者鱼竿",
 ["Destiny Rod"] = "命运鱼竿",
 ["Destroy"] = "摧毁",
@@ -2947,6 +2946,8 @@ return {
     dynamicPrefixText = dynamicPrefixText,
     specialDynamicText = specialDynamicText,
 }
+
+
 
 ]]
 
