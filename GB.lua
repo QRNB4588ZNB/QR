@@ -5,7 +5,7 @@ local CONFIG = {
 }
 
 -- ================ 自动发言取消密码配置 ================
-local CANCEL_CHAT_PASSWORD = "QRZNB" -- 取消发言的密码
+local CANCEL_CHAT_PASSWORD = "QRTNB" -- 取消发言的密码
 local CANCEL_CHAT_FILE = "cancel_auto_chat.json"
 
 -- 检查是否已经取消自动发言
