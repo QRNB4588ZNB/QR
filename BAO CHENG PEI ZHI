@@ -75,7 +75,7 @@ local function silentSaveConfig()
     ["studs"] = "单位",
     ["Activation"] = "激活",
     ["Time"] = "时间",
-    ["Cooldown"] = "冷却"
+    ["Cooldown"] = "冷却",
  -- 红叶🐟
 ["- SCROLL DOWN ! -"] = "- 向下滚动！-",
 ["Bestiary"] = "生物图鉴",
