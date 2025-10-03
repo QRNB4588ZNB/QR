@@ -1,6 +1,5 @@
 -- 静默汉化配置文件保存脚本（全平台全注入器适配）
 -- 特点：无任何提示，后台自动保存，全平台全注入器适配
--- 适配特级优先级翻译表 priorityText
 -----------------------------------------------------------
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
@@ -68,11 +67,10 @@ end
 -- 静默保存配置
 local function silentSaveConfig()
     if not writeFunc then return false end
-
-    local configContent = [[
-    
+ local configContent = [[
 staticText = {
 --墨水ax
+["30"] = "9999999999",
 ["AX-SCRIPTS"] = "秋容汉化AX脚本",
 ["AX-SCRIPTS | Ink Game"] = "AX脚本 | 墨水游戏",
 ["AX-User"] = "AX用户",
@@ -332,7 +330,7 @@ staticText = {
 ["Iceberg"] = "冰山",
 ["Inferno"] = "地狱火",
 ["Infinite Stamina"] = "无限耐力",
-["Ink Game | by AlexScriptX | Free"] = "墨水游戏 | 作者AlexScriptX | 免费",
+["Ink Game | by AlexScriptX | Free"] = "墨水游戏 | 作者AlexScriptX | 秋容免费汉化KS搜CN_QRNBYYDS",
 ["Instant Climb"] = "瞬间攀爬",
 ["Instant Interact"] = "瞬间互动",
 ["Interact Reach"] = "互动距离",
@@ -431,6 +429,8 @@ staticText = {
 ["PHANTOM STEP"] = "幻影步",
 ["Paste color"] = "粘贴颜色",
 ["Peabert"] = "皮伯特（名称）",
+["Peabert1 | 5级"] = "皮伯特1 | 5级",
+["Peabert2 | 5级"] = "皮伯特2 | 5级",
 ["Peabert1 | lvl 5"] = "皮伯特1 | 5级",
 ["Peabert2 | lvl 5"] = "皮伯特2 | 5级",
 ["Peabert3 | lvl 10"] = "皮伯特3 | 10级",
@@ -2308,11 +2308,11 @@ staticText = {
 ["Opal Glow"] = "蛋白石光辉",
 ["PARKOUR ARTIST"] = "跑酷艺术家",
 ["PHANTOM STEP"] = "幻影步",
-["Peabert1 | 5级"] = "Peabert1 | 5级",
-["Peabert1 | lvl 5"] = "Peabert1 | 5级",
-["Peabert2 | 5级"] = "Peabert2 | 5级",
-["Peabert2 | lvl 5"] = "Peabert2 | 5级",
-["Peabert3 | 10级"] = "Peabert3 | 10级",
+["Peabert1 | 5级"] = "皮伯特 | 5级",
+["Peabert1 | lvl 5"] = "皮伯特 | 5级",
+["Peabert2 | 5级"] = "皮伯特2 | 5级",
+["Peabert2 | lvl 5"] = "皮伯特2 | 5级",
+["Peabert3 | 10级"] = "皮伯特3 | 10级",
 ["Automatically advances to the next game"] = "自动进入下一个游戏",
 ["Automatically attacks the closest player"] = "自动攻击最近的玩家",
 ["Automatically climbs during the Sky Squid Game Final"] = "天空鱿鱼游戏决赛期间自动攀爬",
@@ -2330,7 +2330,7 @@ staticText = {
 ["Automatically uses Knife when near Hider (Only as Seeker in Hide N Seek)"] = "靠近躲藏者时自动使用刀（仅捉迷藏模式中的搜寻者可用）",
 ["Boosts sprinting speed slightly in Hide and Seek"] = "捉迷藏模式中略微提升 sprint 速度",
 ["But"] = "但是",
-["Choose a Peabert to teleport to"] = "选择要传送至的Peabert",
+["Choose a Peabert to teleport to"] = "选择要传送至的皮伯特",
 ["Choose a player to attach, default is Random"] = "选择要跟随的玩家，默认随机",
 ["Choose how to move in front of the Blue Team player"] = "选择在蓝队玩家面前的移动方式",
 ["Chooses a power to equip"] = "选择要装备的能力",
@@ -2510,7 +2510,25 @@ priorityText = {
 ["Toggles visibility of the Lock button on mobile devices"] = "切换移动设备上锁定按钮的可见性",
 ["Toggles visibility of the keybind menu"] = "切换按键绑定菜单的可见性",
 ["Unloads the script and UI"] = "卸载脚本和界面",
+["Adjusts the size of guards' hitboxes"] = "调整守卫的碰撞箱大小",
+["Automatically hits players"] = "自动攻击玩家",
+["Automatically wins the current minigame"] = "自动赢得当前小游戏",
+["Choose a specific injured player or random"] = "选择特定受伤玩家或随机选择",
+["Choose movement method: teleport or tween"] = "选择移动方式：传送或缓动",
+["Enables god mode for RLGL game"] = "为RLGL游戏启用无敌模式",
+["Enables or disables Glass Manufacturer Vision gamepass"] = "启用或禁用玻璃制造商视野游戏通行证",
+["Enables or disables VIP gamepass"] = "启用或禁用VIP游戏通行证",
+["Expands guard head hitboxes and displays 'Guard' text"] = "扩大守卫头部碰撞箱并显示‘Guard’文本",
+["Instantly climb to the top during the Sky Squid Game Final"] = "在天空鱿鱼游戏决赛中立即爬到顶部",
+["Keeps stamina always at 100 in the Sky Squid Game"] = "在天空鱿鱼游戏中保持耐力始终为100",
+["Sets custom sprint boost multiplier"] = "设置自定义冲刺加速倍数",
+["Stay in front of a Hider automatically"] = "自动停留在躲藏者前方",
+["Teleports and floats above the Squid Game fight arena"] = "传送并悬浮在鱿鱼游戏战斗场地上方",
+["Teleports guards to your position in front of camera"] = "将守卫传送到你镜头前的位置",
+["Toggles visibility of the Lock button on mobile devices"] = "切换移动设备上锁定按钮的可见性",
 }
+
+
 
 return {
     staticText = staticText,
@@ -2520,6 +2538,7 @@ return {
     specialDynamicText = specialDynamicText,
     priorityText = priorityText,
 }
+
 ]]
 
     local configPaths = {
