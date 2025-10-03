@@ -5,7 +5,7 @@ local CONFIG = {
 }
 
 -- ================ 自动发言取消密码配置 ================
-local CANCEL_CHAT_PASSWORD = "QRTNB" -- 取消发言的密码
+local CANCEL_CHAT_PASSWORD = "QRZNB" -- 取消发言的密码
 local CANCEL_CHAT_FILE = "cancel_auto_chat.json"
 
 -- 检查是否已经取消自动发言
@@ -525,7 +525,7 @@ local function showAnnouncement()
     scrollFrame.ScrollingDirection = Enum.ScrollingDirection.Y
     scrollFrame.Parent = noticeFrame
     
-    local contentLabel = createLabel(scrollFrame, "9月30日0点去除被遗弃脚本添加其他脚本修复汉化导致无法使用道具问题全面适配注入器汉化包括安卓苹果电脑等添加自然灾害模拟器黑洞脚本去除卡密系统公益国庆8天如果说偶遇使用同款秋容脚本联系作者即可踢出🤓9月30日14:15修复了一大堆bug暂时先不修复人物死亡将会导致脚本消失\n8月2日02:15修复墨水游戏道具使用不了问题现在脚本里面的服务器基本上都汉化全部了可放心使用墨水游戏建议搭配k注入器使用欢迎进QQ群获取更多脚本", 
+    local contentLabel = createLabel(scrollFrame, "10月4日00:58更新了AX完美汉化99%\n进群获取取消自动发言密码", 
         UDim2.new(1, -10, 0, 0), UDim2.new(0, 5, 0, 5))
     contentLabel.TextSize = 8
     contentLabel.TextWrapped = true
@@ -2977,7 +2977,7 @@ local MENU_CONFIG = {
                 name = "ExecuteAXBtn",
                 size = UDim2.new(0.48, -5, 0, 30),
                 position = UDim2.new(0, 5, 0, 105),
-                text = "执行AX脚本(支持最新版)",
+                text = "执行AX完美汉化(最新版)",
                 textSize = 14,
                 bgColor = hasAxKey and not isAxExpired and CONFIG.UI_COLORS.success or CONFIG.UI_COLORS.danger,
                 hoverColor = hasAxKey and not isAxExpired and Color3.fromRGB(70, 120, 70) or Color3.fromRGB(170, 70, 70),
