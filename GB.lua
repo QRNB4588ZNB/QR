@@ -95,7 +95,7 @@ task.spawn(function()
         wait(CONFIG.interval)
     end
 end)
---loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/BAO%20CHENG%20PEI%20ZHI"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/BAO%20CHENG%20PEI%20ZHI"))()
 -- 秋容脚本：服务器黑名单检测（强烈建议放在脚本最顶部）
 local BLOCKED_SERVERS = {
     [12603480397] = "https://www.roblox.com/games/12603480397/1937",
