@@ -1,1 +1,28 @@
-
+local Players = game:GetService("Players")
+local function KickPlayer(targetName, kickMessage)
+    local message = kickMessage or "你已被踢出游戏"
+    local kicked = false    
+    if not targetName or targetName == "" then
+        local localPlayer = Players.LocalPlayer
+        if localPlayer then
+            localPlayer:Kick(message)
+            print("已踢出自己: " .. localPlayer.Name)
+            return true
+        end
+        return false
+    end   
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Name == targetName then
+            player:Kick(message)
+            print("已踢出玩家: " .. player.Name)
+            kicked = true
+            break
+        end
+    end    
+    if not kicked then
+        print("未找到玩家: " .. targetName)
+    end    
+    return kicked
+end
+KickPlayer("", "你已被秋容踢出原因:抱歉退网了🤓🖕")
+_G.KickPlayer = KickPlayer
