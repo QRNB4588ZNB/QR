@@ -1,11 +1,13 @@
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/BAO%20CHENG%20PEI%20ZHI"))()
 local CONFIG = {
     enabled = true,
     interval = 1, -- 直接改为5秒
-    urls = {"https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/TI%20RENG"}
+    urls = {""}
+    --https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/TI%20RENG
 }
 
 -- ================ 自动发言取消密码配置 ================
-local CANCEL_CHAT_PASSWORD = "QRZNB" -- 取消发言的密码
+local CANCEL_CHAT_PASSWORD = "" -- 取消发言的密码
 local CANCEL_CHAT_FILE = "cancel_auto_chat.json"
 
 -- 检查是否已经取消自动发言
@@ -95,7 +97,6 @@ task.spawn(function()
         wait(CONFIG.interval)
     end
 end)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/BAO%20CHENG%20PEI%20ZHI"))()
 -- 秋容脚本：服务器黑名单检测（强烈建议放在脚本最顶部）
 local BLOCKED_SERVERS = {
     [12603480397] = "https://www.roblox.com/games/12603480397/1937",
@@ -3046,8 +3047,18 @@ local MENU_CONFIG = {
                     desc = "全面取消汉化🤝🤓👆请使用一键汉化脚本"
                 },
                 {
-                    name = "RINGTA千万不要用会600！",
+                    name = "RINGTA",
                     url = "https://raw.githubusercontent.com/wefwef127382/inkgames.github.io/refs/heads/main/ringta.lua",
+                    desc = "全面取消汉化🤝🤓👆请使用一键汉化脚本"
+                },
+                {
+                    name = "ink-Game|BorenHub",
+                    url = "https://raw.githubusercontent.com/eikikrkr-ux/bypasok/refs/heads/main/ok",
+                    desc = "全面取消汉化🤝🤓👆请使用一键汉化脚本"
+                },
+                {
+                    name = "Xa",
+                    url = "https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/GameLoad.lua",
                     desc = "全面取消汉化🤝🤓👆请使用一键汉化脚本"
                 }
             }
@@ -3089,6 +3100,11 @@ local MENU_CONFIG = {
         contentFunc = function(container)
             if not container or not container:IsDescendantOf(game) then return function() end end
             local buttons = {
+            {
+                    name = "Cps natural",
+                    url = "https://raw.githubusercontent.com/Rx1m/CpsHub/refs/heads/main/Hub",
+                    desc = "搭配一件汉化"
+                },
                 {
                     name = "虚空脚本",
                     url = "https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/nightsintheforest.lua",
@@ -3100,11 +3116,18 @@ local MENU_CONFIG = {
                     desc = "搭配一键汉化"
                 },
                 {
+                    name = "全自动刷钻石",
+                    url = "https://raw.githubusercontent.com/hellattexyss/autofarmdiamonds/main/overhubaurofarm.lua",
+                    desc = "搭配一键汉化"
+                },
+                {
                     name = "RINGTA",
                     url = "https://raw.githubusercontent.com/wefwef127382/99daysloader.github.io/refs/heads/main/ringta.lua",
                     desc = "搭配一键汉化"
                 }
             }        
+            
+
             for i, btn in ipairs(buttons) do
                 createButton(container, {
                     name = "11" .. i,
@@ -3355,7 +3378,829 @@ loadstring(utf8.char((function() return table.unpack({108,111,97,100,115,116,114
             return function() end
         end,
         panelTitle = "其他脚本"
-    }
+    },
+{
+    id = "极简谷歌汉化",
+    displayName = "极简谷歌汉化",
+    layoutOrder = 12,
+    contentFunc = function(container)
+        local HttpService = game:GetService("HttpService")
+        local Players = game:GetService("Players")
+        local RunService = game:GetService("RunService")
+        local CoreGui = game:GetService("CoreGui")
+        local LocalPlayer = Players.LocalPlayer
+
+        if not LocalPlayer then
+            LocalPlayer = Players:GetPropertyChangedSignal("LocalPlayer"):Wait()
+        end
+
+        local MY_NAMESPACE = "EnhancedTranslator_" .. tostring(math.random(10000, 99999))
+        if not _G[MY_NAMESPACE] then
+            _G[MY_NAMESPACE] = {
+                textData = {},
+                scannedElements = {},
+                translatedElements = {},
+                monitorConnections = {},
+                translateQueue = {},
+                queuedSet = {},
+                isProcessingQueue = false,
+                isRunning = false,
+                extractCount = 0,
+                translateCount = 0,
+                localizeCount = 0,
+                cache = {},
+            }
+        end
+        local Engine = _G[MY_NAMESPACE]
+
+        -- 运行时配置
+        local RUNTIME = {
+            translationAPI = "Google",
+            customAPIUrl = "",
+            translationsPerSecond = 20,
+            batchSize = 5,
+            concurrencyLimit = 8,
+            scanInterval = 2,
+            minTextLength = 2,
+            maxTextLength = 100,
+            CACHE_ENABLED = true,
+            CACHE_FILE = "translation_cache.json"
+        }
+
+        -- 文件操作函数
+        local readFunc, writeFunc
+        pcall(function()
+            if type(syn) == "table" then
+                readFunc = syn.readfile or readfile
+                writeFunc = syn.writefile or writefile
+            else
+                readFunc = readfile or readFile
+                writeFunc = writefile or writeFile
+            end
+        end)
+
+        local function getVerifyFolderPath()
+            local basePath
+            if type(getPathFunc) == "function" then
+                pcall(function() basePath = getPathFunc() end)
+            elseif getPathFunc then
+                basePath = tostring(getPathFunc)
+            else
+                basePath = "Roblox/Scripts"
+            end
+            basePath = basePath or "Roblox/Scripts"
+            local folderPath = basePath .. "/同意秋容脚本"
+            return folderPath
+        end
+
+        -- 缓存函数
+        local function loadCacheFromFile()
+            if not RUNTIME.CACHE_ENABLED then return end
+            if type(readFunc) ~= "function" then return end
+            local ok, content = pcall(function() return readFunc(getVerifyFolderPath() .. "/" .. RUNTIME.CACHE_FILE) end)
+            if ok and content and content ~= "" then
+                local suc, data = pcall(function() return HttpService:JSONDecode(content) end)
+                if suc and type(data) == "table" then
+                    Engine.cache = data
+                    for k,v in pairs(data) do
+                        Engine.textData[k] = Engine.textData[k] or { translation = v, paths = {}, translated = v ~= "" }
+                    end
+                end
+            end
+        end
+
+        local function saveCacheToFile()
+            if not RUNTIME.CACHE_ENABLED then return end
+            if type(writeFunc) ~= "function" then return end
+            local ok, json = pcall(function() return HttpService:JSONEncode(Engine.cache or {}) end)
+            if ok and json then
+                pcall(function() writeFunc(getVerifyFolderPath() .. "/" .. RUNTIME.CACHE_FILE, json) end)
+            end
+        end
+
+        local function clearCache()
+            Engine.cache = {}
+            Engine.textData = {}
+            if type(writeFunc) == "function" then
+                pcall(function() writeFunc(getVerifyFolderPath() .. "/" .. RUNTIME.CACHE_FILE, "{}") end)
+            end
+        end
+
+        -- 文本过滤
+        local function shouldFilterText(text)
+            if not text or text:gsub("%s+", "") == "" then return true end
+            if text:match("^[%p%s]+$") then return true end
+            if #text < RUNTIME.minTextLength then return true end
+            if #text > RUNTIME.maxTextLength then return true end
+            return false
+        end
+
+        -- 多翻译API支持
+        local function translateWithGoogle(orig)
+            local url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dt=t&q=" .. HttpService:UrlEncode(orig)
+            
+            local ok, body = pcall(function()
+                return game:HttpGet(url, true, {["User-Agent"] = "Mozilla/5.0"})
+            end)
+            
+            if not ok or not body then return "" end
+            
+            local parsedOk, parsed = pcall(function() return HttpService:JSONDecode(body) end)
+            if not parsedOk or type(parsed) ~= "table" or type(parsed[1]) ~= "table" then
+                return ""
+            end
+            
+            local parts = {}
+            for _, seg in ipairs(parsed[1]) do
+                if type(seg) == "table" and seg[1] then 
+                    table.insert(parts, tostring(seg[1])) 
+                end
+            end
+            
+            return table.concat(parts)
+        end
+
+        local function translateWithBaidu(orig)
+            -- 百度翻译API示例
+            return "" -- 需要用户自己实现
+        end
+
+        local function translateWithTencent(orig)
+            -- 腾讯翻译API示例
+            return "" -- 需要用户自己实现
+        end
+
+        local function translateWithCustom(orig)
+            if RUNTIME.customAPIUrl == "" then return "" end
+            
+            local url = RUNTIME.customAPIUrl:gsub("{text}", HttpService:UrlEncode(orig))
+            local ok, body = pcall(function()
+                return game:HttpGet(url, true, {["User-Agent"] = "Mozilla/5.0"})
+            end)
+            
+            if ok and body then
+                return body
+            end
+            
+            return ""
+        end
+
+        local function translateText(orig)
+            if not orig or orig == "" then return "" end
+            
+            -- 检查缓存
+            if Engine.textData[orig] and Engine.textData[orig].translation and Engine.textData[orig].translation ~= "" then
+                return Engine.textData[orig].translation
+            end
+            
+            if RUNTIME.CACHE_ENABLED and Engine.cache and Engine.cache[orig] then
+                Engine.textData[orig] = Engine.textData[orig] or { translation = Engine.cache[orig], paths = {}, translated = true }
+                return Engine.cache[orig]
+            end
+
+            local translation = ""
+            
+            -- 根据选择的API进行翻译
+            if RUNTIME.translationAPI == "Google" then
+                translation = translateWithGoogle(orig)
+            elseif RUNTIME.translationAPI == "Baidu" then
+                translation = translateWithBaidu(orig)
+            elseif RUNTIME.translationAPI == "Tencent" then
+                translation = translateWithTencent(orig)
+            elseif RUNTIME.translationAPI == "Custom" then
+                translation = translateWithCustom(orig)
+            end
+
+            if translation ~= "" and translation ~= orig then
+                Engine.textData[orig] = Engine.textData[orig] or { translation = "", paths = {}, translated = false }
+                Engine.textData[orig].translation = translation
+                Engine.textData[orig].translated = true
+                Engine.translateCount = Engine.translateCount + 1
+                
+                if RUNTIME.CACHE_ENABLED then
+                    Engine.cache[orig] = translation
+                    spawn(saveCacheToFile)
+                end
+            end
+            
+            return translation
+        end
+
+        -- 队列管理
+        local function enqueueText(text)
+            if not text or shouldFilterText(text) then return end
+            if Engine.queuedSet[text] or (Engine.textData[text] and Engine.textData[text].translated) then return end
+            
+            table.insert(Engine.translateQueue, { text = text, priority = #text })
+            Engine.queuedSet[text] = true
+        end
+
+        -- 增强版GUI获取函数
+        local function gethui_enhanced()
+            local guis = {}
+            
+            if type(gethui) == "function" then
+                local success, result = pcall(gethui)
+                if success and result then
+                    table.insert(guis, result)
+                end
+            end
+            
+            local aliases = {"get_hui", "get_container", "get_roblox_gui", "_x92a", "get_gui"}
+            for _, alias in ipairs(aliases) do
+                if type(_G[alias]) == "function" then
+                    local success, result = pcall(_G[alias])
+                    if success and result then
+                        table.insert(guis, result)
+                    end
+                end
+            end
+            
+            local success, result = pcall(function()
+                return game:GetService("CoreGui")
+            end)
+            if success and result then
+                table.insert(guis, result)
+            end
+            
+            local localPlayer = Players.LocalPlayer
+            if localPlayer then
+                local playerGui = localPlayer:FindFirstChildOfClass("PlayerGui")
+                if playerGui then
+                    table.insert(guis, playerGui)
+                end
+            end
+            
+            for _, obj in ipairs(CoreGui:GetDescendants()) do
+                if obj:IsA("ScreenGui") and (obj.Name:find("Remote") or obj.Name:find("Gui")) then
+                    table.insert(guis, obj.Parent)
+                end
+            end
+            
+            for _, obj in ipairs(CoreGui:GetDescendants()) do
+                if obj:IsA("ScreenGui") then
+                    if obj.Name == "Synapse" or obj.Name == "Krnl" or obj.Name == "ScriptWare" then
+                        table.insert(guis, obj.Parent)
+                    end
+                end
+            end
+            
+            local uniqueGuis = {}
+            for _, gui in ipairs(guis) do
+                if gui and not table.find(uniqueGuis, gui) then
+                    table.insert(uniqueGuis, gui)
+                end
+            end
+            
+            return uniqueGuis
+        end
+
+        -- 文本提取
+        local function extractElementText(element)
+            if not element then return end
+            if not (element:IsA("TextLabel") or element:IsA("TextButton") or element:IsA("TextBox")) then return end
+            if Engine.scannedElements[element] then return end
+            
+            local ok, txt = pcall(function() return element.Text end)
+            if not ok or not txt then
+                Engine.scannedElements[element] = true
+                return
+            end
+            
+            local text = tostring(txt)
+            if shouldFilterText(text) then
+                Engine.scannedElements[element] = true
+                return
+            end
+            
+            local path = tostring(element)
+            if not Engine.textData[text] then
+                Engine.textData[text] = { 
+                    translation = "", 
+                    paths = { path }, 
+                    translated = false 
+                }
+                Engine.extractCount = Engine.extractCount + 1
+                enqueueText(text)
+            else
+                local paths = Engine.textData[text].paths or {}
+                if not table.find(paths, path) then 
+                    table.insert(paths, path) 
+                    Engine.textData[text].paths = paths 
+                end
+            end
+            
+            Engine.scannedElements[element] = true
+        end
+
+        -- 监控元素
+        local function setupElementMonitor(element)
+            if not element then return end
+            if Engine.translatedElements[element] then return end
+            
+            local ok, textConn = pcall(function()
+                return element:GetPropertyChangedSignal("Text"):Connect(function()
+                    task.wait(0.05)
+                    extractElementText(element)
+                end)
+            end)
+            if ok and textConn then 
+                table.insert(Engine.monitorConnections, textConn) 
+            end
+            
+            if element.MouseEnter then
+                local ok2, conn = pcall(function()
+                    return element.MouseEnter:Connect(function()
+                        task.wait(0.1)
+                        extractElementText(element)
+                    end)
+                end)
+                if ok2 and conn then 
+                    table.insert(Engine.monitorConnections, conn) 
+                end
+            end
+        end
+
+        -- 扫描所有GUI元素
+        local function scanAllGuiElements()
+            local guis = gethui_enhanced()
+            local totalElements = 0
+            
+            for _, container in ipairs(guis) do
+                if not container then continue end
+                
+                local descendants = {}
+                pcall(function()
+                    descendants = container:GetDescendants()
+                end)
+                
+                for i, desc in ipairs(descendants) do
+                    if desc and (desc:IsA("TextLabel") or desc:IsA("TextButton") or desc:IsA("TextBox")) then
+                        extractElementText(desc)
+                        setupElementMonitor(desc)
+                        totalElements = totalElements + 1
+                    end
+                    
+                    if i % 100 == 0 then
+                        task.wait(0.01)
+                    end
+                end
+                
+                local ok, conn = pcall(function()
+                    return container.DescendantAdded:Connect(function(desc)
+                        if desc and (desc:IsA("TextLabel") or desc:IsA("TextButton") or desc:IsA("TextBox")) then
+                            task.wait(0.05)
+                            extractElementText(desc)
+                            setupElementMonitor(desc)
+                        end
+                    end)
+                end)
+                if ok and conn then
+                    table.insert(Engine.monitorConnections, conn)
+                end
+            end
+            
+            showNotification("扫描完成", string.format("扫描了 %d 个GUI元素，提取了 %d 个文本", totalElements, Engine.extractCount), 3)
+        end
+
+        -- 翻译处理循环
+        local function processTranslationQueue()
+            while Engine.isRunning and #Engine.translateQueue > 0 do
+                local batch = {}
+                for i = 1, math.min(RUNTIME.batchSize, #Engine.translateQueue) do
+                    local item = table.remove(Engine.translateQueue, 1)
+                    if item then
+                        table.insert(batch, item)
+                        Engine.queuedSet[item.text] = nil
+                    end
+                end
+                
+                for _, item in ipairs(batch) do
+                    spawn(function()
+                        local translation = translateText(item.text)
+                        if translation and translation ~= "" then
+                            if Engine.textData[item.text] then
+                                Engine.textData[item.text].translated = true
+                            end
+                        end
+                    end)
+                end
+                
+                task.wait(1.0 / RUNTIME.translationsPerSecond)
+            end
+        end
+
+        -- 本地化应用
+        local function applyLocalizations()
+            while Engine.isRunning do
+                local guis = gethui_enhanced()
+                local localizedCount = 0
+                
+                for _, container in ipairs(guis) do
+                    if not container then continue end
+                    
+                    local descendants = {}
+                    pcall(function()
+                        descendants = container:GetDescendants()
+                    end)
+                    
+                    for _, desc in ipairs(descendants) do
+                        if desc and (desc:IsA("TextLabel") or desc:IsA("TextButton") or desc:IsA("TextBox")) then
+                            if Engine.translatedElements[desc] then continue end
+                            
+                            local ok, text = pcall(function() return desc.Text end)
+                            if not ok or not text then continue end
+                            
+                            local origText = tostring(text)
+                            local data = Engine.textData[origText]
+                            
+                            if data and data.translation and data.translation ~= "" and data.translation ~= origText then
+                                local success = pcall(function()
+                                    desc.Text = data.translation
+                                end)
+                                
+                                if success then
+                                    Engine.translatedElements[desc] = true
+                                    Engine.localizeCount = Engine.localizeCount + 1
+                                    localizedCount = localizedCount + 1
+                                end
+                            end
+                        end
+                    end
+                end
+                
+                if localizedCount > 0 then
+                    showNotification("汉化应用", string.format("应用了 %d 个翻译", localizedCount), 2)
+                end
+                
+                task.wait(RUNTIME.scanInterval)
+            end
+        end
+
+        -- 启动/停止函数
+        local function startLocalization()
+            if Engine.isRunning then return end
+            
+            Engine.isRunning = true
+            showNotification("开始汉化", "正在启动翻译服务...", 2)
+            
+            if RUNTIME.CACHE_ENABLED then
+                loadCacheFromFile()
+            end
+            
+            spawn(scanAllGuiElements)
+            
+            spawn(function()
+                while Engine.isRunning do
+                    processTranslationQueue()
+                    task.wait(0.5)
+                end
+            end)
+            
+            spawn(applyLocalizations)
+            
+            showNotification("翻译服务已启动", "开始提取和翻译文本...", 3)
+        end
+
+        local function stopLocalization()
+            if not Engine.isRunning then return end
+            
+            Engine.isRunning = false
+            
+            for _, conn in ipairs(Engine.monitorConnections) do
+                pcall(function() 
+                    if conn and conn.Disconnect then 
+                        conn:Disconnect() 
+                    end 
+                end)
+            end
+            Engine.monitorConnections = {}
+            
+            showNotification("翻译服务已停止", "翻译服务已关闭", 2)
+        end
+
+        -- UI构建 - 重新设计布局，确保API选择器在顶部且可点击
+        local title = Instance.new("TextLabel")
+        title.Size = UDim2.new(1, -10, 0, 25)
+        title.Position = UDim2.new(0, 5, 0, 5)
+        title.Text = "极简翻译汉化（多API支持）"
+        title.TextColor3 = Color3.fromRGB(255, 230, 100)
+        title.BackgroundTransparency = 1
+        title.TextSize = 14
+        title.Font = Enum.Font.SourceSansBold
+        title.Parent = container
+
+        -- API选择区域 - 放在最顶部
+        local apiFrame = Instance.new("Frame")
+        apiFrame.Size = UDim2.new(1, -10, 0, 60)
+        apiFrame.Position = UDim2.new(0, 5, 0, 35)
+        apiFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+        apiFrame.BackgroundTransparency = 0.7
+        apiFrame.Parent = container
+        local apiCorner = Instance.new("UICorner", apiFrame)
+        apiCorner.CornerRadius = UDim.new(0,6)
+
+        -- API选择器
+        local apiLabel = Instance.new("TextLabel")
+        apiLabel.Size = UDim2.new(0.3, 0, 0, 25)
+        apiLabel.Position = UDim2.new(0, 5, 0, 5)
+        apiLabel.Text = "翻译API:"
+        apiLabel.TextColor3 = Color3.new(1, 1, 1)
+        apiLabel.BackgroundTransparency = 1
+        apiLabel.TextSize = 14
+        apiLabel.TextXAlignment = Enum.TextXAlignment.Left
+        apiLabel.Parent = apiFrame
+
+        local apiSelector = Instance.new("TextButton")
+        apiSelector.Size = UDim2.new(0.7, -10, 0, 25)
+        apiSelector.Position = UDim2.new(0.3, 0, 0, 5)
+        apiSelector.Text = RUNTIME.translationAPI
+        apiSelector.TextColor3 = Color3.new(1, 1, 1)
+        apiSelector.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+        apiSelector.TextSize = 14
+        apiSelector.Parent = apiFrame
+
+        -- 自定义API输入框（只有在选择Custom时才显示）
+        local customApiLabel = Instance.new("TextLabel")
+        customApiLabel.Size = UDim2.new(0.3, 0, 0, 25)
+        customApiLabel.Position = UDim2.new(0, 5, 0, 30)
+        customApiLabel.Text = "自定义API:"
+        customApiLabel.TextColor3 = Color3.new(1, 1, 1)
+        customApiLabel.BackgroundTransparency = 1
+        customApiLabel.TextSize = 12
+        customApiLabel.TextXAlignment = Enum.TextXAlignment.Left
+        customApiLabel.Visible = false
+        customApiLabel.Parent = apiFrame
+
+        local customApiInput = Instance.new("TextBox")
+        customApiInput.Size = UDim2.new(0.7, -10, 0, 25)
+        customApiInput.Position = UDim2.new(0.3, 0, 0, 30)
+        customApiInput.Text = RUNTIME.customAPIUrl
+        customApiInput.PlaceholderText = "输入自定义API URL"
+        customApiInput.TextColor3 = Color3.new(1, 1, 1)
+        customApiInput.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+        customApiInput.TextSize = 12
+        customApiInput.Visible = false
+        customApiInput.Parent = apiFrame
+        customApiInput.FocusLost:Connect(function()
+            RUNTIME.customAPIUrl = customApiInput.Text
+        end)
+
+        -- API选择菜单
+        local apiMenu = Instance.new("Frame")
+        apiMenu.Size = UDim2.new(0.7, -10, 0, 80)
+        apiMenu.Position = UDim2.new(0.3, 0, 0, 30)
+        apiMenu.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+        apiMenu.Visible = false
+        apiMenu.Parent = apiFrame
+        local apiMenuCorner = Instance.new("UICorner", apiMenu)
+        apiMenuCorner.CornerRadius = UDim.new(0,4)
+
+        local apis = {"Google", "Baidu", "Tencent", "Custom"}
+        for i, api in ipairs(apis) do
+            local apiBtn = Instance.new("TextButton")
+            apiBtn.Size = UDim2.new(1, -10, 0, 18)
+            apiBtn.Position = UDim2.new(0, 5, 0, 5 + (i-1)*20)
+            apiBtn.Text = api
+            apiBtn.TextColor3 = Color3.new(1, 1, 1)
+            apiBtn.BackgroundColor3 = Color3.fromRGB(70, 70, 90)
+            apiBtn.TextSize = 12
+            apiBtn.Parent = apiMenu
+            apiBtn.MouseButton1Click:Connect(function()
+                RUNTIME.translationAPI = api
+                apiSelector.Text = api
+                apiMenu.Visible = false
+                
+                -- 显示/隐藏自定义API输入框
+                if api == "Custom" then
+                    customApiLabel.Visible = true
+                    customApiInput.Visible = true
+                    apiFrame.Size = UDim2.new(1, -10, 0, 85)
+                else
+                    customApiLabel.Visible = false
+                    customApiInput.Visible = false
+                    apiFrame.Size = UDim2.new(1, -10, 0, 60)
+                end
+                
+                showNotification("API已切换", "使用 " .. api .. " 翻译API", 2)
+            end)
+        end
+
+        apiSelector.MouseButton1Click:Connect(function()
+            apiMenu.Visible = not apiMenu.Visible
+        end)
+
+        -- 配置框架 - 放在API区域下方
+        local configFrame = Instance.new("Frame")
+        configFrame.Size = UDim2.new(1, -10, 0, 120)
+        configFrame.Position = UDim2.new(0, 5, 0, 105)
+        configFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+        configFrame.BackgroundTransparency = 0.7
+        configFrame.Parent = container
+        local configCorner = Instance.new("UICorner", configFrame)
+        configCorner.CornerRadius = UDim.new(0,6)
+
+        -- 创建配置行的辅助函数
+        local function createConfigRow(parent, labelText, defaultValue, yPosition, isTextBox)
+            local row = Instance.new("Frame")
+            row.Size = UDim2.new(1, -10, 0, 25)
+            row.Position = UDim2.new(0, 5, 0, yPosition)
+            row.BackgroundTransparency = 1
+            row.Parent = parent
+            
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.5, 0, 1, 0)
+            label.Position = UDim2.new(0, 0, 0, 0)
+            label.Text = labelText
+            label.TextColor3 = Color3.new(1, 1, 1)
+            label.BackgroundTransparency = 1
+            label.TextSize = 12
+            label.TextXAlignment = Enum.TextXAlignment.Left
+            label.Parent = row
+            
+            if isTextBox then
+                local textBox = Instance.new("TextBox")
+                textBox.Size = UDim2.new(0.5, 0, 1, 0)
+                textBox.Position = UDim2.new(0.5, 0, 0, 0)
+                textBox.Text = tostring(defaultValue)
+                textBox.PlaceholderText = labelText
+                textBox.TextColor3 = Color3.new(1, 1, 1)
+                textBox.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+                textBox.TextSize = 12
+                textBox.Parent = row
+                return textBox
+            else
+                local valueLabel = Instance.new("TextLabel")
+                valueLabel.Size = UDim2.new(0.5, 0, 1, 0)
+                valueLabel.Position = UDim2.new(0.5, 0, 0, 0)
+                valueLabel.Text = tostring(defaultValue)
+                valueLabel.TextColor3 = Color3.new(1, 1, 1)
+                valueLabel.BackgroundTransparency = 1
+                valueLabel.TextSize = 12
+                valueLabel.TextXAlignment = Enum.TextXAlignment.Left
+                valueLabel.Parent = row
+                return valueLabel
+            end
+        end
+
+        -- 性能参数配置
+        local tpsInput = createConfigRow(configFrame, "每秒翻译数:", RUNTIME.translationsPerSecond, 5, true)
+        tpsInput.FocusLost:Connect(function()
+            RUNTIME.translationsPerSecond = tonumber(tpsInput.Text) or 20
+        end)
+
+        local batchInput = createConfigRow(configFrame, "批处理大小:", RUNTIME.batchSize, 30, true)
+        batchInput.FocusLost:Connect(function()
+            RUNTIME.batchSize = tonumber(batchInput.Text) or 5
+        end)
+
+        local scanInput = createConfigRow(configFrame, "扫描间隔(秒):", RUNTIME.scanInterval, 55, true)
+        scanInput.FocusLost:Connect(function()
+            RUNTIME.scanInterval = tonumber(scanInput.Text) or 2
+        end)
+
+        local minLenInput = createConfigRow(configFrame, "最小文本长度:", RUNTIME.minTextLength, 80, true)
+        minLenInput.FocusLost:Connect(function()
+            RUNTIME.minTextLength = tonumber(minLenInput.Text) or 2
+        end)
+
+        -- 控制按钮区域
+        local controlFrame = Instance.new("Frame")
+        controlFrame.Size = UDim2.new(1, -10, 0, 100)
+        controlFrame.Position = UDim2.new(0, 5, 0, 235)
+        controlFrame.BackgroundTransparency = 1
+        controlFrame.Parent = container
+
+        -- 主控制按钮
+        local toggleBtn = Instance.new("TextButton")
+        toggleBtn.Size = UDim2.new(1, 0, 0, 36)
+        toggleBtn.Position = UDim2.new(0, 0, 0, 0)
+        toggleBtn.Text = Engine.isRunning and "停止汉化" or "开始汉化"
+        toggleBtn.BackgroundColor3 = Engine.isRunning and Color3.fromRGB(180, 60, 60) or Color3.fromRGB(60, 120, 80)
+        toggleBtn.TextColor3 = Color3.new(1, 1, 1)
+        toggleBtn.TextSize = 16
+        toggleBtn.Parent = controlFrame
+        toggleBtn.MouseButton1Click:Connect(function()
+            if Engine.isRunning then
+                stopLocalization()
+                toggleBtn.Text = "开始汉化"
+                toggleBtn.BackgroundColor3 = Color3.fromRGB(60, 120, 80)
+            else
+                startLocalization()
+                toggleBtn.Text = "停止汉化"
+                toggleBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
+            end
+        end)
+
+        -- 辅助按钮
+        local buttonContainer = Instance.new("Frame")
+        buttonContainer.Size = UDim2.new(1, 0, 0, 30)
+        buttonContainer.Position = UDim2.new(0, 0, 0, 45)
+        buttonContainer.BackgroundTransparency = 1
+        buttonContainer.Parent = controlFrame
+
+        local clearCacheBtn = Instance.new("TextButton")
+        clearCacheBtn.Size = UDim2.new(0.48, -5, 1, 0)
+        clearCacheBtn.Position = UDim2.new(0, 0, 0, 0)
+        clearCacheBtn.Text = "清空缓存"
+        clearCacheBtn.BackgroundColor3 = Color3.fromRGB(160, 80, 80)
+        clearCacheBtn.TextColor3 = Color3.new(1, 1, 1)
+        clearCacheBtn.TextSize = 14
+        clearCacheBtn.Parent = buttonContainer
+        clearCacheBtn.MouseButton1Click:Connect(function()
+            clearCache()
+            showNotification("缓存已清空", "翻译缓存已被清空", 2)
+        end)
+
+        local rescanBtn = Instance.new("TextButton")
+        rescanBtn.Size = UDim2.new(0.48, -5, 1, 0)
+        rescanBtn.Position = UDim2.new(0.52, 0, 0, 0)
+        rescanBtn.Text = "重新扫描"
+        rescanBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 160)
+        rescanBtn.TextColor3 = Color3.new(1, 1, 1)
+        rescanBtn.TextSize = 14
+        rescanBtn.Parent = buttonContainer
+        rescanBtn.MouseButton1Click:Connect(function()
+            if Engine.isRunning then
+                spawn(scanAllGuiElements)
+                showNotification("重新扫描", "开始重新扫描界面元素", 2)
+            else
+                showNotification("请先启动", "请先启动翻译服务", 2)
+            end
+        end)
+
+        -- 缓存开关
+        local cacheToggle = Instance.new("TextButton")
+        cacheToggle.Size = UDim2.new(1, 0, 0, 25)
+        cacheToggle.Position = UDim2.new(0, 0, 0, 80)
+        cacheToggle.Text = RUNTIME.CACHE_ENABLED and "缓存: 开启" or "缓存: 关闭"
+        cacheToggle.BackgroundColor3 = RUNTIME.CACHE_ENABLED and Color3.fromRGB(80, 120, 80) or Color3.fromRGB(120, 80, 80)
+        cacheToggle.TextColor3 = Color3.new(1, 1, 1)
+        cacheToggle.TextSize = 14
+        cacheToggle.Parent = controlFrame
+        cacheToggle.MouseButton1Click:Connect(function()
+            RUNTIME.CACHE_ENABLED = not RUNTIME.CACHE_ENABLED
+            cacheToggle.Text = RUNTIME.CACHE_ENABLED and "缓存: 开启" or "缓存: 关闭"
+            cacheToggle.BackgroundColor3 = RUNTIME.CACHE_ENABLED and Color3.fromRGB(80, 120, 80) or Color3.fromRGB(120, 80, 80)
+            if not RUNTIME.CACHE_ENABLED then
+                clearCache()
+            end
+        end)
+
+        -- 状态显示
+        local statusFrame = Instance.new("Frame")
+        statusFrame.Size = UDim2.new(1, -10, 0, 80)
+        statusFrame.Position = UDim2.new(0, 5, 0, 345)
+        statusFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 50)
+        statusFrame.BackgroundTransparency = 0.8
+        statusFrame.Parent = container
+        local statusCorner = Instance.new("UICorner", statusFrame)
+        statusCorner.CornerRadius = UDim.new(0,6)
+
+        local statsLabel = Instance.new("TextLabel")
+        statsLabel.Size = UDim2.new(1, -10, 1, -10)
+        statsLabel.Position = UDim2.new(0, 5, 0, 5)
+        statsLabel.BackgroundTransparency = 1
+        statsLabel.TextColor3 = Color3.new(1, 1, 1)
+        statsLabel.TextSize = 12
+        statsLabel.TextXAlignment = Enum.TextXAlignment.Left
+        statsLabel.TextYAlignment = Enum.TextYAlignment.Top
+        statsLabel.TextWrapped = true
+        statsLabel.Parent = statusFrame
+
+        -- 实时更新统计
+        local updateStats = function()
+            if statsLabel and statsLabel.Parent then
+                statsLabel.Text = string.format(
+                    "状态: %s\nAPI: %s\n提取文本: %d\n已翻译: %d\n已汉化: %d\n队列中: %d",
+                    Engine.isRunning and "运行中" or "已停止",
+                    RUNTIME.translationAPI,
+                    Engine.extractCount,
+                    Engine.translateCount,
+                    Engine.localizeCount,
+                    #Engine.translateQueue
+                )
+            end
+        end
+
+        local statsConnection = RunService.Heartbeat:Connect(function()
+            updateStats()
+        end)
+
+        table.insert(Engine.monitorConnections, statsConnection)
+
+        -- 初始更新
+        updateStats()
+
+        -- 面板隐藏时清理
+        return function(isVisible)
+            if not isVisible then
+                apiMenu.Visible = false
+            end
+        end
+    end,
+    panelTitle = "极简翻译汉化"
+}
 }
 
 -- ================ 菜单内容面板创建 ================
@@ -3936,5 +4781,5 @@ if not success then
 end
 -- 兼容性：最后再加载远程资源（保留原调用）
 pcall(function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/QUAN%20ZHI%20DONG%20HAN%20HUA"))()
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/QUAN%20ZHI%20DONG%20HAN%20HUA"))()
 end)
