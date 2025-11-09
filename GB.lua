@@ -511,7 +511,7 @@ local function showAnnouncement()
     local noticeGui = createScreenGui("Popup_Announcement")
     local noticeFrame = createFrame(noticeGui, UDim2.new(0, 400, 0, 300), UDim2.new(0.5, -200, 0.5, -150))
     
-    local titleLabel = createLabel(noticeFrame, "3.5汉化版 脚本公告", UDim2.new(1, 0, 0, 40), UDim2.new(0, 0, 0, 15))
+    local titleLabel = createLabel(noticeFrame, "回归了", UDim2.new(1, 0, 0, 40), UDim2.new(0, 0, 0, 15))
     titleLabel.TextSize = 11
     titleLabel.TextColor3 = Color3.fromRGB(255, 210, 0)
     titleLabel.TextXAlignment = Enum.TextXAlignment.Center
@@ -525,7 +525,7 @@ local function showAnnouncement()
     scrollFrame.ScrollingDirection = Enum.ScrollingDirection.Y
     scrollFrame.Parent = noticeFrame
     
-    local contentLabel = createLabel(scrollFrame, "10月6日最后一次更新添加了谷歌汉化以后有英文的直接使用汉化即可就不会再更新汉化了没有自动发言验证密码直接点击验证密码就行添加自然灾害新的黑洞脚本修复无法使用的问题", 
+    local contentLabel = createLabel(scrollFrame, "回归了", 
         UDim2.new(1, -10, 0, 0), UDim2.new(0, 5, 0, 5))
     contentLabel.TextSize = 8
     contentLabel.TextWrapped = true
@@ -1633,22 +1633,29 @@ local function showNotification(title, text, duration)
     notificationGui.IgnoreGuiInset = true
     notificationGui.Parent = playerGui
     
-    local notificationFrame = Instance.new("Frame")
-    notificationFrame.Name = "NotificationFrame"
-    notificationFrame.Size = UDim2.new(0, NOTIFICATION_DATA.width * 0.8, 0, NOTIFICATION_DATA.height * 0.8)
-    notificationFrame.Position = UDim2.new(
-        1, -NOTIFICATION_DATA.width - 2,
-        1, 10
-    )
-    notificationFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
-    notificationFrame.BackgroundTransparency = 1
-    notificationFrame.BorderSizePixel = 0
-    notificationFrame.ClipsDescendants = true
-    notificationFrame.Parent = notificationGui
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
-    corner.Parent = notificationFrame
+local notificationFrame = Instance.new("Frame")
+notificationFrame.Name = "NotificationFrame"
+notificationFrame.Size = UDim2.new(0, NOTIFICATION_DATA.width * 0.8, 0, NOTIFICATION_DATA.height * 0.8)
+notificationFrame.Position = UDim2.new(
+    1, -NOTIFICATION_DATA.width - 2,
+    1, 10
+)
+notificationFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+notificationFrame.BackgroundTransparency = 1
+notificationFrame.BorderSizePixel = 0
+notificationFrame.ClipsDescendants = true
+notificationFrame.Parent = notificationGui
+
+-- 添加浅蓝色边框
+local borderStroke = Instance.new("UIStroke")
+borderStroke.Color = Color3.fromRGB(100, 150, 255)
+borderStroke.Transparency = 0.3
+borderStroke.Thickness = 1.5
+borderStroke.Parent = notificationFrame
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 6)
+corner.Parent = notificationFrame
     
     createLabel(notificationFrame, {
         name = "TitleLabel",
@@ -1661,16 +1668,60 @@ local function showNotification(title, text, duration)
         textWrapped = true
     })
     
-    createLabel(notificationFrame, {
-        name = "ContentLabel",
-        size = UDim2.new(1, -8, 0, 32),
-        position = UDim2.new(0, 4, 0, 23),
-        text = text or "",
-        color = Color3.new(1, 1, 1),
-        textSize = 10,
-        textWrapped = true,
-        textTruncate = Enum.TextTruncate.AtEnd
-    })
+createLabel(notificationFrame, {
+    name = "ContentLabel",
+    size = UDim2.new(1, -8, 0, 24), -- 减少高度为血条腾出空间
+    position = UDim2.new(0, 4, 0, 23),
+    text = text or "",
+    color = Color3.new(1, 1, 1),
+    textSize = 10,
+    textWrapped = true,
+    textTruncate = Enum.TextTruncate.AtEnd
+})
+
+-- 添加血条背景
+local healthBarBackground = Instance.new("Frame")
+healthBarBackground.Name = "HealthBarBackground"
+healthBarBackground.Size = UDim2.new(1, -8, 0, 6)
+healthBarBackground.Position = UDim2.new(0, 4, 0, 48)
+healthBarBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+healthBarBackground.BackgroundTransparency = 0.4
+healthBarBackground.Parent = notificationFrame
+
+local healthBarBackgroundCorner = Instance.new("UICorner")
+healthBarBackgroundCorner.CornerRadius = UDim.new(0, 3)
+healthBarBackgroundCorner.Parent = healthBarBackground
+
+-- 添加血条前景
+local healthBar = Instance.new("Frame")
+healthBar.Name = "HealthBar"
+healthBar.Size = UDim2.new(1, 0, 1, 0)
+healthBar.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+healthBar.BackgroundTransparency = 0.2
+healthBar.Parent = healthBarBackground
+
+local healthBarCorner = Instance.new("UICorner")
+healthBarCorner.CornerRadius = UDim.new(0, 3)
+healthBarCorner.Parent = healthBar
+
+-- 血条动画
+spawn(function()
+    -- 初始为满血
+    healthBar.Size = UDim2.new(1, 0, 1, 0)
+    healthBar.BackgroundColor3 = Color3.fromRGB(100, 150, 255) -- 浅蓝色
+    
+    -- 动画：从右向左扣除
+    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Linear)
+    local tween = TweenService:Create(healthBar, tweenInfo, {Size = UDim2.new(0.4, 0, 1, 0)})
+    tween:Play()
+    
+    -- 监听血条变化，当血量低于40%时变为红色
+    tween.Completed:Connect(function()
+        if healthBar.Size.X.Scale <= 0.4 then
+            healthBar.BackgroundColor3 = Color3.fromRGB(255, 80, 80) -- 红色
+        end
+    end)
+end)
     
     pcall(function()
         local sound = Instance.new("Sound")
@@ -1689,14 +1740,14 @@ local function showNotification(title, text, duration)
     
     updateWindowPositions()
     
-    local popInTween = TweenService:Create(
-        notificationFrame,
-        TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-        {
-            Size = UDim2.new(0, NOTIFICATION_DATA.width, 0, NOTIFICATION_DATA.height),
-            BackgroundTransparency = 0.8
-        }
-    )
+local popInTween = TweenService:Create(
+    notificationFrame,
+    TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+    {
+        Size = UDim2.new(0, NOTIFICATION_DATA.width, 0, NOTIFICATION_DATA.height + 8), -- 增加高度容纳血条
+        BackgroundTransparency = 0.8
+    }
+)
     popInTween:Play()
     
     task.wait(duration or CONFIG.NOTIFICATION.DURATION)
