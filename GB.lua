@@ -511,7 +511,7 @@ local function showAnnouncement()
     local noticeGui = createScreenGui("Popup_Announcement")
     local noticeFrame = createFrame(noticeGui, UDim2.new(0, 400, 0, 300), UDim2.new(0.5, -200, 0.5, -150))
     
-    local titleLabel = createLabel(noticeFrame, "回归了", UDim2.new(1, 0, 0, 40), UDim2.new(0, 0, 0, 15))
+    local titleLabel = createLabel(noticeFrame, "12月3日04.25更新啦", UDim2.new(1, 0, 0, 40), UDim2.new(0, 0, 0, 15))
     titleLabel.TextSize = 11
     titleLabel.TextColor3 = Color3.fromRGB(255, 210, 0)
     titleLabel.TextXAlignment = Enum.TextXAlignment.Center
@@ -525,7 +525,7 @@ local function showAnnouncement()
     scrollFrame.ScrollingDirection = Enum.ScrollingDirection.Y
     scrollFrame.Parent = noticeFrame
     
-    local contentLabel = createLabel(scrollFrame, "回归了", 
+    local contentLabel = createLabel(scrollFrame, "目前已更新GB脚本详细说明：必看！必看！必看！\n仅供测试版有bug请反馈，目前只支持4种近战武器后续将添加更多\n普通模式\n· 功能：自动攻击范围内的所有僵尸\n· 适用：正常游戏，快速清怪\n以下模式强烈使用远程武器！\n恶搞模式\n功能：正常攻击僵尸，但只引爆队友旁边的炸药桶\n算法机制为：在杀戮光环可攻击范围之内队友又在炸药桶旁边优先攻击炸药桶死队友死亡🤓\n适用：整好友时使用可用于敌人\n伪装模式\n功能：只攻击队友旁边的炸药桶，不攻击任何其他僵尸，发现概率比较低\n适用：伪装成正常玩家偷偷坑好友\n炸药桶开关\n是否攻击炸药桶僵尸\n关闭后即使炸药桶在旁边也不会攻击\n重要警告：\n使用恶搞/伪装模式可能被发现并挂dc，请谨慎使用！ 炸药桶爆炸会炸伤好友无脑开启即可🤓UI按钮可拖动挡住屏幕可以移动位置/n记住：普通模式好好玩 恶搞模式坑他就完了 伪装模式神不知鬼不觉的坑死他", 
         UDim2.new(1, -10, 0, 0), UDim2.new(0, 5, 0, 5))
     contentLabel.TextSize = 8
     contentLabel.TextWrapped = true
@@ -3344,10 +3344,53 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ke9460394-dot/ugik/re
         end,
         panelTitle = "被遗弃"
     },
+            {
+        id = "内脏与黑火药",
+        displayName = "内脏与黑火药",
+        layoutOrder = 11,
+        contentFunc = function(container)
+            if not container or not container:IsDescendantOf(game) then return function() end end
+            local buttons = {
+                {
+                    name = "秋容杀戮光环", 
+                    func = function()
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/QRNB4588ZNB/QR/refs/heads/main/光环"))()
+                    end,
+                    desc = "详细说明：必看！必看！必看！\n仅供测试版有bug请反馈，目前只支持4种近战武器后续将添加更多\n普通模式\n· 功能：自动攻击范围内的所有僵尸\n· 适用：正常游戏，快速清怪\n以下模式强烈使用远程武器！\n恶搞模式\n功能：正常攻击僵尸，但只引爆队友旁边的炸药桶\n算法机制为：在杀戮光环可攻击范围之内队友又在炸药桶旁边优先攻击炸药桶死队友死亡🤓\n适用：整好友时使用可用于敌人\n伪装模式\n功能：只攻击队友旁边的炸药桶，不攻击任何其他僵尸，发现概率比较低\n适用：伪装成正常玩家偷偷坑好友\n炸药桶开关\n是否攻击炸药桶僵尸\n关闭后即使炸药桶在旁边也不会攻击\n重要警告：\n使用恶搞/伪装模式可能被发现并挂dc，请谨慎使用！ 炸药桶爆炸会炸伤好友无脑开启即可🤓UI按钮可拖动挡住屏幕可以移动位置/n记住：普通模式好好玩 恶搞模式坑他就完了 伪装模式神不知鬼不觉的坑死他"
+                }
+            }        
+            for i, btn in ipairs(buttons) do
+                createButton(container, {
+                    name = "11" .. i,
+                    layoutOrder = i,
+                    size = UDim2.new(1, 0, 0, 45 * UI_STATE.scale),
+                    text = btn.name,
+                    bgColor = CONFIG.UI_COLORS.primary,
+                    hoverColor = Color3.fromRGB(70, 70, 120),
+                    onClick = function()
+                        createExecutionDialog(
+                            "执行 " .. btn.name,
+                            btn.desc,
+                            function()
+                                if btn.func then
+                                    btn.func()
+                                else
+                                    loadstring(game:HttpGet(btn.url))()
+                                end
+                                showNotification("功能加载中", "脚本执行中...")
+                            end
+                        )
+                    end
+                })
+            end
+            return function() end
+        end,
+        panelTitle = "内脏与黑火药"
+    },
     {
         id = "其他脚本",
         displayName = "其他脚本",
-        layoutOrder = 11,
+        layoutOrder = 12,
         contentFunc = function(container)
             if not container or not container:IsDescendantOf(game) then return function() end end
             local buttons = {
@@ -3432,7 +3475,7 @@ loadstring(utf8.char((function() return table.unpack({108,111,97,100,115,116,114
         {
     id = "极简谷歌汉化",
     displayName = "极简谷歌汉化",
-    layoutOrder = 12,
+    layoutOrder = 13,
     contentFunc = function(container)
         local HttpService = game:GetService("HttpService")
         local Players = game:GetService("Players")
