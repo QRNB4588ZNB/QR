@@ -525,7 +525,7 @@ local function showAnnouncement()
     scrollFrame.ScrollingDirection = Enum.ScrollingDirection.Y
     scrollFrame.Parent = noticeFrame
     
-    local contentLabel = createLabel(scrollFrame, "目前已更新GB脚本详细说明：必看！必看！必看！\n仅供测试版有bug请反馈，目前只支持4种近战武器后续将添加更多\n普通模式\n· 功能：自动攻击范围内的所有僵尸\n· 适用：正常游戏，快速清怪\n以下模式强烈使用远程武器！\n恶搞模式\n功能：正常攻击僵尸，但只引爆队友旁边的炸药桶\n算法机制为：在杀戮光环可攻击范围之内队友又在炸药桶旁边优先攻击炸药桶死队友死亡🤓\n适用：整好友时使用可用于敌人\n伪装模式\n功能：只攻击队友旁边的炸药桶，不攻击任何其他僵尸，发现概率比较低\n适用：伪装成正常玩家偷偷坑好友\n炸药桶开关\n是否攻击炸药桶僵尸\n关闭后即使炸药桶在旁边也不会攻击\n重要警告：\n使用恶搞/伪装模式可能被发现并挂dc，请谨慎使用！ 炸药桶爆炸会炸伤好友无脑开启即可🤓UI按钮可拖动挡住屏幕可以移动位置/n记住：普通模式好好玩 恶搞模式坑他就完了 伪装模式神不知鬼不觉的坑死他", 
+    local contentLabel = createLabel(scrollFrame, "已去除掉GB脚本某个傻逼搁这拿25块钱圈圈圈圈你妈呢？", 
         UDim2.new(1, -10, 0, 0), UDim2.new(0, 5, 0, 5))
     contentLabel.TextSize = 8
     contentLabel.TextWrapped = true
